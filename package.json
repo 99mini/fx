@@ -7,7 +7,9 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "badge": "node ./.scripts/coverage-badge.js",
+    "ci": "pnpm run test:coverage && pnpm run badge"
   },
   "keywords": [],
   "author": "",
