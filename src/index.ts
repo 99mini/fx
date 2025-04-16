@@ -1,4 +1,4 @@
-import { map, filter, take, toArray } from "./array";
+import { map, filter, take, toArray, group } from "./array";
 
 export class Fx<T> implements Iterable<T> {
   private iterable: Iterable<T>;
@@ -28,6 +28,10 @@ export class Fx<T> implements Iterable<T> {
 
   toArray(): T[] {
     return toArray(this.iterable);
+  }
+
+  group<K>(keyFn: (item: T) => K): Map<K, T[]> {
+    return group(this.iterable, keyFn);
   }
 
   [Symbol.iterator](): Iterator<T> {
