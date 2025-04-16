@@ -1,4 +1,4 @@
-import { map, filter, take, toArray, group } from "./array";
+import { chunk, filter, flatMap, group, map, reduce, take, toArray, zip, scan } from "./array";
 
 export class Fx<T> implements Iterable<T> {
   private iterable: Iterable<T>;
@@ -35,13 +35,30 @@ export class Fx<T> implements Iterable<T> {
     return group(this.iterable, keyFn);
   }
 
+  flatMap<U>(fn: (item: T) => Iterable<U>): Fx<U> {
+    return this.cloneWith(flatMap(this.iterable, fn));
+  }
+
+  zip<U>(...others: Iterable<U>[]): Fx<[T, ...U[]]> {
+    return this.cloneWith(zip<T | U>(this.iterable, ...others) as Iterable<[T, ...U[]]>);
+  }
+
+  chunk(size: number): Fx<T[]> {
+    return this.cloneWith(chunk(this.iterable, size));
+  }
+
+  reduce<U>(fn: (acc: U, cur: T) => U, initial: U): U {
+    return reduce(this.iterable, fn, initial);
+  }
+
+  scan<U>(fn: (acc: U, cur: T) => U, initial: U): Fx<U> {
+    return this.cloneWith(scan(this.iterable, fn, initial));
+  }
+
   [Symbol.iterator](): Iterator<T> {
     return this.iterable[Symbol.iterator]();
   }
 
-  /**
-   * @returns Returns the length of the iterable.
-   */
   get length(): number {
     return this.toArray().length;
   }
