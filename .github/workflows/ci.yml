@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, feat/*, fix/*]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ✅ Checkout
+        uses: actions/checkout@v3
+
+      - name: 🔧 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "pnpm"
+
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
+      - name: 🧪 Run tests
+        run: pnpm test
+
+      - name: 📊 Generate test coverage
+        run: pnpm ci
+
+      - name: 📤 Save coverage from PR
+        id: pr_coverage
+        run: |
+          COVERAGE=$(node .scripts/get-summary.js)
+          echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
+
+      - name: 📥 Checkout main to get base coverage
+        run: |
+          git fetch origin main
+          git checkout origin/main -- coverage/coverage-final.json
+
+      - name: 📤 Save coverage from main
+        id: base_coverage
+        run: |
+          COVERAGE=$(node .scripts/get-summary.js)
+          echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
+
+      - name: 💬 Post coverage change to PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prCoverage = parseFloat('${{ steps.pr_coverage.outputs.coverage }}');
+            const baseCoverage = parseFloat('${{ steps.base_coverage.outputs.coverage }}');
+            const delta = (prCoverage - baseCoverage).toFixed(2);
+
+            const comment = delta > 0
+              ? `🟢 **Test coverage increased**: ${prCoverage}% (+${delta}%)`
+              : delta < 0
+              ? `🔴 **Test coverage decreased**: ${prCoverage}% (${delta}%)`
+              : `🟡 **Test coverage unchanged**: ${prCoverage}%`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
