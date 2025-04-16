@@ -21,6 +21,11 @@ describe("Fx", () => {
     expect(fx.toArray()).toEqual([1, 2, 3]);
   });
 
+  test("should return length of elements", () => {
+    const fx = new Fx([1, 2, 3]);
+    expect(fx.length).toBe(3);
+  });
+
   test("should map elements", () => {
     const fx = new Fx([1, 2, 3]);
     const result = fx.map((x) => x * 2).toArray();

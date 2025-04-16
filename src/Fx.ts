@@ -38,4 +38,11 @@ export class Fx<T> implements Iterable<T> {
   [Symbol.iterator](): Iterator<T> {
     return this.iterable[Symbol.iterator]();
   }
+
+  /**
+   * @returns Returns the length of the iterable.
+   */
+  get length(): number {
+    return this.toArray().length;
+  }
 }
