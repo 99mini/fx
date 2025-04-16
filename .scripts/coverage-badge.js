@@ -89,7 +89,25 @@ function saveSvg(svg, filePath) {
 // 실행
 const coverage = loadCoverageData(COVERAGE_PATH);
 const summary = getTotalCoverage(coverage);
-const percent = summary.statements; // 주요 지표 선택 가능
-const color = getColor(percent);
-const svg = generateSvg("coverage", percent, color);
-saveSvg(svg, OUTPUT_PATH);
+
+let total = 0;
+
+for (const [key, value] of Object.entries(summary)) {
+  console.log(`\nCoverage ${key}: ${value}%`);
+  total += value;
+
+  const percent = summary[key];
+  const color = getColor(percent);
+  const svg = generateSvg(key, percent, color);
+  const outputPath = path.resolve(__dirname, `../badges/${key}.svg`);
+  saveSvg(svg, outputPath);
+}
+
+const average = Math.round(total / Object.keys(summary).length);
+
+console.log(`\nTotal Coverage: ${average}%`);
+
+const color = getColor(average);
+const svg = generateSvg("coverage", average, color);
+const outputPath = path.resolve(__dirname, OUTPUT_PATH);
+saveSvg(svg, outputPath);

@@ -29,10 +29,10 @@ jobs:
         run: pnpm install
 
       - name: 🧪 Run tests
-        run: pnpm test
+        run: pnpm run test
 
       - name: 📊 Generate test coverage
-        run: pnpm ci
+        run: pnpm run ci
 
       - name: 📤 Save coverage from PR
         id: pr_coverage
