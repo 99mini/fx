@@ -1,3 +1,5 @@
+import { map, filter, take, toArray } from "./array";
+
 export class Fx<T> implements Iterable<T> {
   private iterable: Iterable<T>;
 
@@ -9,40 +11,23 @@ export class Fx<T> implements Iterable<T> {
     return new Fx(iterable);
   }
 
+  private cloneWith<U>(iter: Iterable<U>): Fx<U> {
+    return new Fx(iter);
+  }
   map<U>(fn: (item: T) => U): Fx<U> {
-    const self = this;
-    function* generator() {
-      for (const item of self.iterable) {
-        yield fn(item);
-      }
-    }
-    return new Fx(generator());
+    return this.cloneWith(map(this.iterable, fn));
   }
 
   filter(fn: (item: T) => boolean): Fx<T> {
-    const self = this;
-    function* generator() {
-      for (const item of self.iterable) {
-        if (fn(item)) yield item;
-      }
-    }
-    return new Fx(generator());
+    return this.cloneWith(filter(this.iterable, fn));
   }
 
   take(n: number): Fx<T> {
-    const self = this;
-    function* generator() {
-      let i = 0;
-      for (const item of self.iterable) {
-        if (i++ >= n) break;
-        yield item;
-      }
-    }
-    return new Fx(generator());
+    return this.cloneWith(take(this.iterable, n));
   }
 
   toArray(): T[] {
-    return [...this.iterable];
+    return toArray(this.iterable);
   }
 
   [Symbol.iterator](): Iterator<T> {
