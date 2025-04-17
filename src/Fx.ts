@@ -39,8 +39,8 @@ export class Fx<T> implements Iterable<T> {
     return this.cloneWith(flatMap(this.iterable, fn));
   }
 
-  zip<U>(...others: Iterable<U>[]): Fx<[T, ...U[]]> {
-    return this.cloneWith(zip<T | U>(this.iterable, ...others) as Iterable<[T, ...U[]]>);
+  zip<U>(...others: Iterable<U>[]): Fx<(T | U)[]> {
+    return this.cloneWith(zip<T | U>(this.iterable, ...others));
   }
 
   chunk(size: number): Fx<T[]> {
