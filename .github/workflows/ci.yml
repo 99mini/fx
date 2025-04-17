@@ -64,11 +64,19 @@ jobs:
             const baseCoverage = parseFloat('${{ steps.base_coverage.outputs.coverage }}');
             const delta = (prCoverage - baseCoverage).toFixed(2);
 
-            const comment = delta > 0
-              ? `🟢 **Test coverage increased**: ${prCoverage}% (+${delta}%)`
-              : delta < 0
-              ? `🔴 **Test coverage decreased**: ${prCoverage}% (${delta}%)`
-              : `🟡 **Test coverage unchanged**: ${prCoverage}%`;
+            let comment = '';
+
+            if (prCoverage === baseCoverage && baseCoverage === 100) {
+              comment = `🟢 **Test coverage unchanged**: ${prCoverage}%`;
+            } else {
+              if (delta > 0) {
+                comment = `🟢 **Test coverage increased**: ${prCoverage}% (+${delta}%)`;
+              } else if (delta < 0) {
+                comment = `🔴 **Test coverage decreased**: ${prCoverage}% (${delta}%)`;
+              } else {
+                comment = `🟡 **Test coverage unchanged**: ${prCoverage}%`;
+              }
+            }
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
