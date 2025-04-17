@@ -59,6 +59,10 @@ export class Fx<T> implements Iterable<T> {
     return this.iterable[Symbol.iterator]();
   }
 
+  /**
+   * @description evaluates the iterable and returns the length of the array (O(n))
+   * @returns {number} the length of the array
+   */
   get length(): number {
     return this.toArray().length;
   }
