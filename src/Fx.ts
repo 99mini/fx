@@ -1,4 +1,4 @@
-import { chunk, filter, flatMap, group, map, reduce, take, toArray, zip, scan } from "./array";
+import { chunk, filter, flatMap, groupBy, map, partition, pluck, reduce, scan, sortBy, take, toArray, uniq, zip } from "./array";
 
 export class Fx<T> implements Iterable<T> {
   private iterable: Iterable<T>;
@@ -31,8 +31,8 @@ export class Fx<T> implements Iterable<T> {
     return toArray(this.iterable);
   }
 
-  group<K>(keyFn: (item: T) => K): Map<K, T[]> {
-    return group(this.iterable, keyFn);
+  groupBy<K>(keyFn: (item: T) => K): Map<K, T[]> {
+    return groupBy(this.iterable, keyFn);
   }
 
   flatMap<U>(fn: (item: T) => Iterable<U>): Fx<U> {
@@ -53,6 +53,23 @@ export class Fx<T> implements Iterable<T> {
 
   scan<U>(fn: (acc: U, cur: T) => U, initial: U): Fx<U> {
     return this.cloneWith(scan(this.iterable, fn, initial));
+  }
+
+  pluck<K extends keyof T & string>(key: K): Fx<T[K]> {
+    return this.cloneWith(pluck(this.iterable as Iterable<Record<string, any>>, key));
+  }
+
+  sortBy(keyFn: (item: T) => any): Fx<T> {
+    return this.cloneWith(sortBy(this.iterable, keyFn));
+  }
+
+  uniq(): Fx<T> {
+    return this.cloneWith(uniq(this.iterable));
+  }
+
+  partition(predicate: (item: T) => boolean): [Fx<T>, Fx<T>] {
+    const [truthy, falsy] = partition(this.iterable, predicate);
+    return [new Fx(truthy), new Fx(falsy)];
   }
 
   [Symbol.iterator](): Iterator<T> {

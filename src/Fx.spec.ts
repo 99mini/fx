@@ -51,7 +51,7 @@ describe("Fx", () => {
       { id: 3, category: "A" },
       { id: 4, category: "C" },
     ]);
-    const grouped = fx.group((item) => item.category);
+    const grouped = fx.groupBy((item) => item.category);
     expect(grouped.get("A")).toEqual([
       { id: 1, category: "A" },
       { id: 3, category: "A" },
@@ -81,6 +81,29 @@ describe("Fx", () => {
     const fx = Fx.of([1, 2, 3, 4, 5]);
     const result = fx.chunk(2).toArray();
     expect(result).toEqual([[1, 2], [3, 4], [5]]);
+  });
+
+  test("should partition elements", () => {
+    const fx = Fx.of([1, 2, 3, 4, 5]);
+    const [even, odd] = fx.partition((x) => x % 2 === 0);
+    expect(even.toArray()).toEqual([2, 4]);
+    expect(odd.toArray()).toEqual([1, 3, 5]);
+  });
+
+  test("should pluck elements", () => {
+    const fx = Fx.of([
+      { id: 1, name: "Alice" },
+      { id: 2, name: "Bob" },
+      { id: 3, name: "Charlie" },
+    ]);
+    const result = fx.pluck("name").toArray();
+    expect(result).toEqual(["Alice", "Bob", "Charlie"]);
+  });
+
+  test("should uniq elements", () => {
+    const fx = Fx.of([1, 2, 2, 3, 4, 4, 5]);
+    const result = fx.uniq().toArray();
+    expect(result).toEqual([1, 2, 3, 4, 5]);
   });
 
   test("should reduce elements", () => {

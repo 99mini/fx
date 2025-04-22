@@ -1,6 +1,6 @@
-import { group } from "./group";
+import { groupBy } from "./groupBy";
 
-describe("group", () => {
+describe("groupBy", () => {
   test("should group items by key", () => {
     const items = [
       { id: 1, category: "A" },
@@ -9,7 +9,7 @@ describe("group", () => {
       { id: 4, category: "C" },
     ];
 
-    const grouped = group(items, (item) => item.category);
+    const grouped = groupBy(items, (item) => item.category);
 
     expect(grouped.get("A")).toEqual([
       { id: 1, category: "A" },
