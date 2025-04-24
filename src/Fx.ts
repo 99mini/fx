@@ -7,10 +7,16 @@ export class Fx<T> implements Iterable<T> {
     this.iterable = iterable;
   }
 
+  /**
+   * @description creates a new Fx instance from an iterable
+   */
   static of<T>(iterable: Iterable<T>): Fx<T> {
     return new Fx(iterable);
   }
 
+  /**
+   * @description clones the current iterable and returns a new Fx instance
+   */
   private cloneWith<U>(iter: Iterable<U>): Fx<U> {
     return new Fx(iter);
   }
@@ -23,10 +29,16 @@ export class Fx<T> implements Iterable<T> {
     return this.cloneWith(filter(this.iterable, fn));
   }
 
+  /**
+   * @description evaluates the iterable and returns the first n elements (O(n))
+   */
   take(n: number): Fx<T> {
     return this.cloneWith(take(this.iterable, n));
   }
 
+  /**
+   * @description evaluates the iterable and returns the array (O(n))
+   */
   toArray(): T[] {
     return toArray(this.iterable);
   }
@@ -47,6 +59,9 @@ export class Fx<T> implements Iterable<T> {
     return this.cloneWith(chunk(this.iterable, size));
   }
 
+  /**
+   * @description evaluate
+   */
   reduce<U>(fn: (acc: U, cur: T) => U, initial: U): U {
     return reduce(this.iterable, fn, initial);
   }
@@ -59,7 +74,7 @@ export class Fx<T> implements Iterable<T> {
     return this.cloneWith(pluck(this.iterable as Iterable<Record<string, any>>, key));
   }
 
-  sortBy(compareFn?: (itemA: T, itemB: T) => number): Fx<T> {
+  sort(compareFn?: (itemA: T, itemB: T) => number): Fx<T> {
     return this.cloneWith(sortBy(this.iterable, compareFn));
   }
 

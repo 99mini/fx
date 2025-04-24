@@ -127,7 +127,7 @@ describe("Fx", () => {
 
   test("should sort elements", () => {
     const fx = Fx.of([3, 1, 2]);
-    const result = fx.sortBy((a, b) => a - b).toArray();
+    const result = fx.sort((a, b) => a - b).toArray();
     expect(result).toEqual([1, 2, 3]);
   });
 
@@ -137,7 +137,7 @@ describe("Fx", () => {
       { id: 1, name: "Alice" },
       { id: 2, name: "Bob" },
     ]);
-    const result = fx.sortBy((a, b) => a.id - b.id).toArray();
+    const result = fx.sort((a, b) => a.id - b.id).toArray();
     expect(result).toEqual([
       { id: 1, name: "Alice" },
       { id: 2, name: "Bob" },
