@@ -1,6 +1,7 @@
 import { Fx } from "./Fx";
 
 describe("Fx", () => {
+  // MARK: Test Static Methods
   test("should create an instance of Fx", () => {
     const fx = Fx.of([1, 2, 3]);
     expect(fx).toBeInstanceOf(Fx);
@@ -24,6 +25,12 @@ describe("Fx", () => {
   test("should return length of elements", () => {
     const fx = Fx.of([1, 2, 3]);
     expect(fx.length).toBe(3);
+  });
+
+  // MARK: Test Static Methods
+  test("should return empty array when no elements", () => {
+    const fx = Fx.of([]);
+    expect(fx.toArray()).toEqual([]);
   });
 
   test("should map elements", () => {
@@ -118,8 +125,23 @@ describe("Fx", () => {
     expect(result).toEqual([0, 1, 3, 6]);
   });
 
-  test("should return empty array when no elements", () => {
-    const fx = Fx.of([]);
-    expect(fx.toArray()).toEqual([]);
+  test("should sort elements", () => {
+    const fx = Fx.of([3, 1, 2]);
+    const result = fx.sortBy((a, b) => a - b).toArray();
+    expect(result).toEqual([1, 2, 3]);
+  });
+
+  test("should sort elements by key", () => {
+    const fx = Fx.of([
+      { id: 3, name: "Charlie" },
+      { id: 1, name: "Alice" },
+      { id: 2, name: "Bob" },
+    ]);
+    const result = fx.sortBy((a, b) => a.id - b.id).toArray();
+    expect(result).toEqual([
+      { id: 1, name: "Alice" },
+      { id: 2, name: "Bob" },
+      { id: 3, name: "Charlie" },
+    ]);
   });
 });

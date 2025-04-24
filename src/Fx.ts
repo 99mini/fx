@@ -59,8 +59,8 @@ export class Fx<T> implements Iterable<T> {
     return this.cloneWith(pluck(this.iterable as Iterable<Record<string, any>>, key));
   }
 
-  sortBy(keyFn: (item: T) => any): Fx<T> {
-    return this.cloneWith(sortBy(this.iterable, keyFn));
+  sortBy(compareFn?: (itemA: T, itemB: T) => number): Fx<T> {
+    return this.cloneWith(sortBy(this.iterable, compareFn));
   }
 
   uniq(): Fx<T> {
