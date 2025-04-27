@@ -71,7 +71,7 @@ export class Fx<T> implements Iterable<T> {
   }
 
   pluck<K extends keyof T & string>(key: K): Fx<T[K]> {
-    return this.cloneWith(pluck(this.iterable as Iterable<Record<string, any>>, key));
+    return this.cloneWith(pluck(this.iterable, key));
   }
 
   sort(compareFn?: (itemA: T, itemB: T) => number): Fx<T> {
