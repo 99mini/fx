@@ -14,26 +14,19 @@ export class Fx<T> implements Iterable<T> {
     return new Fx(iterable);
   }
 
-  /**
-   * @description clones the current iterable and returns a new Fx instance
-   */
-  private cloneWith<U>(iter: Iterable<U>): Fx<U> {
-    return new Fx(iter);
-  }
-
   map<U>(fn: (item: T) => U): Fx<U> {
-    return this.cloneWith(map(this.iterable, fn));
+    return Fx.of(map(this.iterable, fn));
   }
 
   filter(fn: (item: T) => boolean): Fx<T> {
-    return this.cloneWith(filter(this.iterable, fn));
+    return Fx.of(filter(this.iterable, fn));
   }
 
   /**
    * @description evaluates the iterable and returns the first n elements (O(n))
    */
   take(n: number): Fx<T> {
-    return this.cloneWith(take(this.iterable, n));
+    return Fx.of(take(this.iterable, n));
   }
 
   /**
@@ -48,15 +41,15 @@ export class Fx<T> implements Iterable<T> {
   }
 
   flatMap<U>(fn: (item: T) => Iterable<U>): Fx<U> {
-    return this.cloneWith(flatMap(this.iterable, fn));
+    return Fx.of(flatMap(this.iterable, fn));
   }
 
   zip<U>(...others: Iterable<U>[]): Fx<(T | U)[]> {
-    return this.cloneWith(zip<T | U>(this.iterable, ...others));
+    return Fx.of(zip<T | U>(this.iterable, ...others));
   }
 
   chunk(size: number): Fx<T[]> {
-    return this.cloneWith(chunk(this.iterable, size));
+    return Fx.of(chunk(this.iterable, size));
   }
 
   /**
@@ -67,24 +60,24 @@ export class Fx<T> implements Iterable<T> {
   }
 
   scan<U>(fn: (acc: U, cur: T) => U, initial: U): Fx<U> {
-    return this.cloneWith(scan(this.iterable, fn, initial));
+    return Fx.of(scan(this.iterable, fn, initial));
   }
 
   pluck<K extends keyof T & string>(key: K): Fx<T[K]> {
-    return this.cloneWith(pluck(this.iterable, key));
+    return Fx.of(pluck(this.iterable, key));
   }
 
   sort(compareFn?: (itemA: T, itemB: T) => number): Fx<T> {
-    return this.cloneWith(sortBy(this.iterable, compareFn));
+    return Fx.of(sortBy(this.iterable, compareFn));
   }
 
   uniq(): Fx<T> {
-    return this.cloneWith(uniq(this.iterable));
+    return Fx.of(uniq(this.iterable));
   }
 
   partition(predicate: (item: T) => boolean): [Fx<T>, Fx<T>] {
     const [truthy, falsy] = partition(this.iterable, predicate);
-    return [new Fx(truthy), new Fx(falsy)];
+    return [Fx.of(truthy), Fx.of(falsy)];
   }
 
   [Symbol.iterator](): Iterator<T> {
