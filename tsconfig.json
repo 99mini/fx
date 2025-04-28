@@ -7,8 +7,7 @@
     "moduleResolution": "node",
     "outDir": "./dist",
     "rootDir": "./src",
-    "resolveJsonModule": true,
-    "declaration": true
+    "resolveJsonModule": true
   },
   "include": ["src"]
 }
