@@ -1,16 +1,29 @@
 {
-  "name": "fx",
+  "name": "@99mini/fx",
   "version": "1.0.0",
   "description": "javascript/typescript functional programming examples",
   "type": "module",
   "packageManager": "pnpm@10.8.0",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "clean": "rm -rf dist",
     "badge": "node ./.scripts/coverage-badge.js",
+    "build:rollup": "rollup -c",
+    "build:types": "tsc --project tsconfig.build.json",
+    "build": "pnpm clean && pnpm build:types && pnpm build:rollup",
     "ci": "pnpm run test:coverage && pnpm run badge",
-    "build": "rollup -c",
     "prepublish": "pnpm run build"
   },
   "keywords": [

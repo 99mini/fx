@@ -9,3 +9,6 @@ coverage/**
 *.log
 
 *.env
+
+.rollup.cache/
+*.tsbuildinfo
