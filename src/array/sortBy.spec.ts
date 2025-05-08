@@ -22,4 +22,10 @@ describe("sortBy", () => {
     const result = sortBy((a, b) => a - b, input);
     expect(result).toEqual(expected);
   });
+
+  test("should sort undefined array", () => {
+    const expected: number[] = [];
+    const result = sortBy(undefined, undefined);
+    expect(result).toEqual(expected);
+  });
 });

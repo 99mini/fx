@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@99mini/fx':
-        specifier: ../
-        version: link:..
       benchmark:
         specifier: ^2.1.4
         version: 2.1.4
