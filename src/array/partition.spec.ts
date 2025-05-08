@@ -8,7 +8,7 @@ describe("partition", () => {
       [2, 4], // truthy
       [1, 3, 5], // falsy
     ];
-    const result = partition(input, predicate);
+    const result = partition(predicate, input);
     expect(result).toEqual(expected);
   });
 
@@ -19,7 +19,7 @@ describe("partition", () => {
       [], // truthy
       [], // falsy
     ];
-    const result = partition(input, predicate);
+    const result = partition(predicate, input);
     expect(result).toEqual(expected);
   });
 });

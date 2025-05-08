@@ -1,4 +1,4 @@
-export function partition<T>(iter: Iterable<T>, predicate: (item: T) => boolean): [T[], T[]] {
+export function partition<T>(predicate: (item: T) => boolean, iter: Iterable<T>): [T[], T[]] {
   const truthy: T[] = [];
   const falsy: T[] = [];
   for (const item of iter) {

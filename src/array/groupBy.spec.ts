@@ -9,7 +9,7 @@ describe("groupBy", () => {
       { id: 4, category: "C" },
     ];
 
-    const grouped = groupBy(items, (item) => item.category);
+    const grouped = groupBy((item) => item.category, items);
 
     expect(grouped.get("A")).toEqual([
       { id: 1, category: "A" },

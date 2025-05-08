@@ -1,4 +1,4 @@
-export function* filter<T>(iter: Iterable<T>, fn: (item: T) => boolean): Generator<T> {
+export function* filter<T>(fn: (item: T) => boolean, iter: Iterable<T>): Generator<T> {
   for (const item of iter) {
     if (fn(item)) yield item;
   }

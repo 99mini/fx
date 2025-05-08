@@ -12,14 +12,14 @@ describe("sortBy", () => {
       { id: 2, name: "Bob" },
       { id: 3, name: "Charlie" },
     ];
-    const result = sortBy(input, (a, b) => a.id - b.id);
+    const result = sortBy((a, b) => a.id - b.id, input);
     expect(result).toEqual(expected);
   });
 
   test("should sort an array of numbers", () => {
     const input = [3, 1, 2];
     const expected = [1, 2, 3];
-    const result = sortBy(input, (a, b) => a - b);
+    const result = sortBy((a, b) => a - b, input);
     expect(result).toEqual(expected);
   });
 });
