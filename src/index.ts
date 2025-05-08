@@ -1,3 +1,1 @@
-import { Fx } from "./Fx";
-
-export { Fx };
+export { Fx } from "./Fx";
