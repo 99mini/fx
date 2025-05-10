@@ -1,4 +1,4 @@
-export function* chunk<T>(iter: Iterable<T>, size: number): Generator<T[], void, unknown> {
+export function* chunk<T>(size: number, iter: Iterable<T>): Generator<T[], void, unknown> {
   let buffer: T[] = [];
   for (const item of iter) {
     buffer.push(item);

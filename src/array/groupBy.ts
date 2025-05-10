@@ -1,4 +1,4 @@
-export function groupBy<T, K>(iter: Iterable<T>, keyFn: (item: T) => K): Map<K, T[]> {
+export function groupBy<T, K>(keyFn: (item: T) => K, iter: Iterable<T>): Map<K, T[]> {
   const map = new Map<K, T[]>();
 
   for (const item of iter) {
