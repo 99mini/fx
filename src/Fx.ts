@@ -1,4 +1,5 @@
-import { chunk, filter, flatMap, groupBy, map, partition, pluck, reduce, scan, sortBy, take, toArray, uniq, zip } from "./array";
+import { chunk, filter, flatMap, groupBy, map, partition, pluck, scan, sortBy, uniq, zip } from "./lazy";
+import { take, toArray, reduce } from "./evaluate";
 
 export class Fx<T> implements Iterable<T> {
   private iterable: Iterable<T>;
@@ -15,18 +16,18 @@ export class Fx<T> implements Iterable<T> {
   }
 
   map<U>(fn: (item: T) => U): Fx<U> {
-    return Fx.of(map(this.iterable, fn));
+    return Fx.of(map(fn, this.iterable));
   }
 
   filter(fn: (item: T) => boolean): Fx<T> {
-    return Fx.of(filter(this.iterable, fn));
+    return Fx.of(filter(fn, this.iterable));
   }
 
   /**
    * @description evaluates the iterable and returns the first n elements (O(n))
    */
   take(n: number): Fx<T> {
-    return Fx.of(take(this.iterable, n));
+    return Fx.of(take(n, this.iterable));
   }
 
   /**
@@ -37,11 +38,11 @@ export class Fx<T> implements Iterable<T> {
   }
 
   groupBy<K>(keyFn: (item: T) => K): Map<K, T[]> {
-    return groupBy(this.iterable, keyFn);
+    return groupBy(keyFn, this.iterable);
   }
 
   flatMap<U>(fn: (item: T) => Iterable<U>): Fx<U> {
-    return Fx.of(flatMap(this.iterable, fn));
+    return Fx.of(flatMap(fn, this.iterable));
   }
 
   zip<U>(...others: Iterable<U>[]): Fx<(T | U)[]> {
@@ -49,26 +50,26 @@ export class Fx<T> implements Iterable<T> {
   }
 
   chunk(size: number): Fx<T[]> {
-    return Fx.of(chunk(this.iterable, size));
+    return Fx.of(chunk(size, this.iterable));
   }
 
   /**
    * @description evaluate
    */
   reduce<U>(fn: (acc: U, cur: T) => U, initial: U): U {
-    return reduce(this.iterable, fn, initial);
+    return reduce(fn, initial, this.iterable);
   }
 
   scan<U>(fn: (acc: U, cur: T) => U, initial: U): Fx<U> {
-    return Fx.of(scan(this.iterable, fn, initial));
+    return Fx.of(scan(fn, initial, this.iterable));
   }
 
   pluck<K extends keyof T & string>(key: K): Fx<T[K]> {
-    return Fx.of(pluck(this.iterable, key));
+    return Fx.of(pluck(key, this.iterable));
   }
 
   sort(compareFn?: (itemA: T, itemB: T) => number): Fx<T> {
-    return Fx.of(sortBy(this.iterable, compareFn));
+    return Fx.of(sortBy(compareFn, this.iterable));
   }
 
   uniq(): Fx<T> {
@@ -76,7 +77,7 @@ export class Fx<T> implements Iterable<T> {
   }
 
   partition(predicate: (item: T) => boolean): [Fx<T>, Fx<T>] {
-    const [truthy, falsy] = partition(this.iterable, predicate);
+    const [truthy, falsy] = partition(predicate, this.iterable);
     return [Fx.of(truthy), Fx.of(falsy)];
   }
 

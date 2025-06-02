@@ -5,9 +5,11 @@
     "esModuleInterop": true,
     "strict": true,
     "moduleResolution": "node",
+    "rootDir": ".",
     "outDir": "./dist",
-    "rootDir": "./src",
     "resolveJsonModule": true
+    // "baseUrl": "./src" // not use alias.
+    // "paths": {"@/*": ["*"]} // not use alias.
   },
-  "include": ["src"]
+  "include": ["src", "__tests__"]
 }
