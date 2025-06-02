@@ -1,0 +1,60 @@
+name: Create Release & Publish Package
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    if: 'github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, "release: v")'
+    runs-on: ubuntu-latest
+    steps:
+      - name: ✅ Checkout
+        uses: actions/checkout@v3
+
+      - name: Extract version from PR title
+        id: extract-version
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          VERSION=$(echo $PR_TITLE | sed -n 's/release: v\(.*\)/\1/p')
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+
+      - name: Create and push tag
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          TAG_NAME="v${{ steps.extract-version.outputs.VERSION }}"
+          echo "Creating tag: $TAG_NAME"
+
+          git tag -a $TAG_NAME -m "Release $TAG_NAME"
+          git push origin $TAG_NAME
+
+      - name: Read CHANGELOG
+        id: changelog
+        run: |
+          # CHANGELOG.md에서 현재 버전의 변경 사항을 추출
+          VERSION="${{ steps.extract-version.outputs.VERSION }}"
+          CHANGELOG_CONTENT=$(sed -n "/## \[${VERSION}\]/,/## \[/p" CHANGELOG.md | sed '$d')
+
+          echo "CHANGELOG_CONTENT<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG_CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.extract-version.outputs.VERSION }}
+          release_name: v${{ steps.extract-version.outputs.VERSION }}
+          body: |
+            ${{ steps.changelog.outputs.CHANGELOG_CONTENT }}
+          draft: false
+          prerelease: false
