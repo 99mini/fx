@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.1 (2025-06-02)
+
+
+### Chores
+
+* update commitlint ([#13](https://github.com/99mini/fx/issues/13)) ([fede2a3](https://github.com/99mini/fx/commit/fede2a3c536359404c7fc35cffdef9db809716be))
+
 ## 1.0.0 (2025-06-02)
 
 
