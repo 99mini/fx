@@ -5,12 +5,10 @@ import { groupBy } from "./groupBy";
 import { map } from "./map";
 import { partition } from "./partition";
 import { pluck } from "./pluck";
-import { reduce } from "./reduce";
+import { range } from "./range";
 import { scan } from "./scan";
 import { sortBy } from "./sortBy";
-import { take } from "./take";
-import { toArray } from "./toArray";
 import { uniq } from "./uniq";
 import { zip } from "./zip";
 
-export { chunk, filter, flatMap, groupBy, map, partition, pluck, reduce, scan, sortBy, take, toArray, uniq, zip };
+export { chunk, filter, flatMap, groupBy, map, partition, pluck, range, scan, sortBy, uniq, zip };

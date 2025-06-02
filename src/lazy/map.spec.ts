@@ -1,5 +1,5 @@
 import { map } from "./map";
-import { range } from "../iter/range";
+import { range } from "./range";
 
 describe("map", () => {
   it("applies function to each element", () => {

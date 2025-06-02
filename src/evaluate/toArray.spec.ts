@@ -1,4 +1,4 @@
-import { toArray } from "../array/toArray";
+import { toArray } from "./toArray";
 
 function* gen() {
   yield 1;

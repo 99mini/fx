@@ -1,4 +1,5 @@
-import { chunk, filter, flatMap, groupBy, map, partition, pluck, reduce, scan, sortBy, take, toArray, uniq, zip } from "./array";
+import { chunk, filter, flatMap, groupBy, map, partition, pluck, scan, sortBy, uniq, zip } from "./lazy";
+import { take, toArray, reduce } from "./evaluate";
 
 export class Fx<T> implements Iterable<T> {
   private iterable: Iterable<T>;

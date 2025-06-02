@@ -1,21 +1,20 @@
 import { take } from "./take";
-import { range } from "../iter/range";
 
 describe("take", () => {
   it("takes the first n elements", () => {
-    const input = range(0, 10);
+    const input = [0, 1, 2, 3, 4, 5];
     const result = [...take(3, input)];
     expect(result).toEqual([0, 1, 2]);
   });
 
   it("returns all if n > length", () => {
-    const input = range(0, 3);
+    const input = [0, 1, 2];
     const result = [...take(10, input)];
     expect(result).toEqual([0, 1, 2]);
   });
 
   it("returns empty if n = 0", () => {
-    const input = range(0, 5);
+    const input = [0, 1, 2];
     const result = [...take(0, input)];
     expect(result).toEqual([]);
   });

@@ -1,5 +1,5 @@
 import { filter } from "./filter";
-import { range } from "../iter/range";
+import { range } from "./range";
 
 describe("filter", () => {
   it("filters elements based on predicate", () => {

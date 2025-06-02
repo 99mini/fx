@@ -1,5 +1,6 @@
-import { Fx } from "../Fx";
-import { map, filter, toArray, take } from "../array";
+import { Fx } from "../src/Fx";
+import { map, filter } from "../src/lazy";
+import { take, toArray } from "../src/evaluate";
 
 // MARK: Test Integration
 // - pure functions
