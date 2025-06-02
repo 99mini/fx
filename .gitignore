@@ -12,3 +12,5 @@ coverage/**
 
 .rollup.cache/
 *.tsbuildinfo
+
+.DS_Store
