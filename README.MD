@@ -22,3 +22,18 @@
 - `Fx`: Fx class implements `Iterable<T>`
 - `lazy`: Lazy evaluation pure functions
 - `evaluate`: Eager evaluation pure functions
+
+# Dev
+
+## Install
+
+```bash
+pnpm install
+```
+
+## Test
+
+```bash
+pnpm run test:watch
+pnpm run test:coverage
+```
