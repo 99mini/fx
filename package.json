@@ -1,6 +1,6 @@
 {
   "name": "@99mini/fx",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "javascript/typescript functional programming examples",
   "type": "module",
   "packageManager": "pnpm@10.8.0",

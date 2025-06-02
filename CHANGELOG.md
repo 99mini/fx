@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.2 (2025-06-02)
+
+
+### Chores
+
+* create release when CHANGELOG.md changed ([#15](https://github.com/99mini/fx/issues/15)) ([aa95de9](https://github.com/99mini/fx/commit/aa95de94e3c419767d78dcee385b6984ef475585))
+
 ### 1.0.1 (2025-06-02)
 
 
