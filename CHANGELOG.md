@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.6 (2025-06-03)
+
+
+### Chores
+
+* prev tag ([#21](https://github.com/99mini/fx/issues/21)) ([b3d5983](https://github.com/99mini/fx/commit/b3d598328d21e401b97408daf9797fb016b4df89))
+
 ### 1.0.5 (2025-06-03)
 
 
