@@ -1,7 +1,7 @@
 import { groupBy } from "./groupBy";
 
 describe("groupBy", () => {
-  test("should group items by key", () => {
+  it("should group items by key", () => {
     const items = [
       { id: 1, category: "A" },
       { id: 2, category: "B" },

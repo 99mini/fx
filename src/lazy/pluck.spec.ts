@@ -1,7 +1,7 @@
 import { pluck } from "./pluck";
 
 describe("pluck", () => {
-  test("should pluck values from an array of objects", () => {
+  it("should pluck values from an array of objects", () => {
     const input = [
       { id: 1, name: "Alice" },
       { id: 2, name: "Bob" },
@@ -12,7 +12,7 @@ describe("pluck", () => {
     expect(result).toEqual(expected);
   });
 
-  test("should pluck values from an array of objects with different keys", () => {
+  it("should pluck values from an array of objects with different keys", () => {
     const input = [
       { id: 1, name: "Alice" },
       { id: 2, name: "Bob" },
