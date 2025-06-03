@@ -22,6 +22,13 @@ jobs:
     steps:
       - name: ✅ Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Extract version from PR title
         id: extract-version
@@ -39,9 +46,6 @@ jobs:
 
       - name: Create and push tag
         run: |
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
           TAG_NAME="v${{ steps.extract-version.outputs.VERSION }}"
           echo "Creating tag: $TAG_NAME"
 
