@@ -69,7 +69,7 @@ jobs:
           echo "base coverage: $COVERAGE"
           echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
 
-          git checkout -
+          git checkout ${{ github.head_ref }}
 
       - name: 📬 Post coverage change to PR
         if: github.event_name == 'pull_request'
