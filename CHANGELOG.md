@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.4](https://github.com/99mini/fx/compare/v1.0.3...v1.0.4) (2025-06-03)
+
+
+### Chores
+
+* change pr comment ([510de5e](https://github.com/99mini/fx/commit/510de5eee66c8716ebe0ae3ddcb5af0f9b12f4e4))
+* fix packages ([bb66a50](https://github.com/99mini/fx/commit/bb66a50d856a70b6110806b97c1eb53a0bbfc5ac))
+* publish local test ([6877a87](https://github.com/99mini/fx/commit/6877a8735cc76960292c97b5bc92b5d045c16827))
+* update packages ([1ff209c](https://github.com/99mini/fx/commit/1ff209c36374656a63ef9abadf60ce9e7c04c848))
+
 ### 1.0.3 (2025-06-03)
 
 

@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   create-release:
     if: "${{github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'release: v')}}"
@@ -43,8 +47,15 @@ jobs:
         run: |
           # CHANGELOG.md에서 현재 버전의 변경 사항을 추출
           VERSION="${{ steps.extract-version.outputs.VERSION }}"
-          CHANGELOG_CONTENT=$(sed -n "/## \[${VERSION}\]/,/## \[/p" CHANGELOG.md | sed '$d')
+          # 대괄호가 있는 형식과 없는 형식 모두 처리
+          CHANGELOG_CONTENT_BODY=$(sed -n -E "/### \[?${VERSION}\]?.*\(/,/### \[?[0-9]+\.[0-9]+\.[0-9]+\]?/p" CHANGELOG.md | sed '$d')
+          PREVIOUS_VERSION=$(git describe --tags --abbrev=0)
+          FULL_CHANGELOG_CONTENT=$(echo "**Full Changelog**: https://github.com/99mini/fx/compare/${PREVIOUS_VERSION}...${VERSION}")
 
+          echo "Previous version: $PREVIOUS_VERSION"
+          echo "Full changelog: $FULL_CHANGELOG_CONTENT"
+
+          CHANGELOG_CONTENT=$(echo "$CHANGELOG_CONTENT_BODY\n\n$FULL_CHANGELOG_CONTENT")
           echo "CHANGELOG_CONTENT<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGELOG_CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -86,6 +97,6 @@ jobs:
         run: pnpm install
 
       - name: Publish npm package
-        run: pnpm publish --no-git-checks
+        run: pnpm npm publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
