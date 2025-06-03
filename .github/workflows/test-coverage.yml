@@ -6,14 +6,14 @@ permissions:
 
 on:
   push:
-    branches: [main]
+    branches: ["*"]
     paths:
       - "**/*.ts"
       - "**/*.spec.ts"
       - "pnpm-lock.yaml"
 
   pull_request:
-    branches: [main]
+    branches: ["*"]
     paths:
       - "**/*.ts"
       - "**/*.spec.ts"
@@ -26,6 +26,11 @@ jobs:
     steps:
       - name: ✅ Checkout
         uses: actions/checkout@v3
+
+      - name: Get Base Branch
+        id: get-base-branch
+        run: |
+          echo "BASE_BRANCH=${{ github.event.pull_request.base.ref }}" >> $GITHUB_OUTPUT
 
       - name: Enable Corepack and Set Pnpm Version
         run: |
@@ -53,12 +58,12 @@ jobs:
           COVERAGE=$(node .scripts/get-summary.js)
           echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
 
-      - name: 📥 Checkout main to get base coverage
+      - name: 📥 Checkout base branch to get base coverage
         run: |
-          git fetch origin main
-          git checkout origin/main -- coverage/coverage-final.json
+          git fetch origin ${{ steps.get-base-branch.outputs.BASE_BRANCH }}
+          git checkout origin/${{ steps.get-base-branch.outputs.BASE_BRANCH }} -- coverage/coverage-final.json
 
-      - name: 📤 Save coverage from main
+      - name: 📤 Save coverage from base branch
         id: base_coverage
         run: |
           COVERAGE=$(node .scripts/get-summary.js)
