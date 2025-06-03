@@ -9,8 +9,21 @@
     "lazy evaluation"
   ],
   "type": "module",
-  "author": "99mini",
+  "author": {
+    "name": "99mini",
+    "email": "0mini9939@gmail.com",
+    "url": "https://github.com/99mini"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/99mini/fx.git"
+  },
+  "homepage": "https://github.com/99mini/fx#readme",
+  "bugs": {
+    "email": "0mini9939@gmail.com",
+    "url": "https://github.com/99mini/fx/issues"
+  },
   "packageManager": "pnpm@10.8.0",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
