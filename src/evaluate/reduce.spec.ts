@@ -1,27 +1,27 @@
 import { reduce } from "./reduce";
 
 describe("reduce", () => {
-  test("applies function to each element", () => {
+  it("applies function to each element", () => {
     const input = [1, 2, 3];
     const result = reduce((acc, cur) => acc + cur, 0, input);
     expect(result).toEqual(6);
   });
-  test("returns initial value when input is empty", () => {
+  it("returns initial value when input is empty", () => {
     const input: number[] = [];
     const result = reduce((acc, cur) => acc + cur, 0, input);
     expect(result).toEqual(0);
   });
-  test("works with non-numeric types", () => {
+  it("works with non-numeric types", () => {
     const input = ["a", "b", "c"];
     const result = reduce((acc, cur) => acc + cur, "", input);
     expect(result).toEqual("abc");
   });
-  test("works with complex objects", () => {
+  it("works with complex objects", () => {
     const input = [{ value: 1 }, { value: 2 }, { value: 3 }];
     const result = reduce((acc, cur) => acc + cur.value, 0, input);
     expect(result).toEqual(6);
   });
-  test("works with initial value of different type", () => {
+  it("works with initial value of different type", () => {
     const input = [1, 2, 3];
     const result = reduce((acc, cur) => acc + cur, "", input);
     expect(result).toEqual("123");

@@ -2,7 +2,7 @@ node_modules
 
 dist
 coverage/**
-!coverage/coverage-final.json
+!coverage/coverage-summary.json
 
 .vscode
 

@@ -5,6 +5,7 @@
 ![functions](./badges/functions.svg)
 ![lines](./badges/lines.svg)
 ![statements](./badges/statements.svg)
+![branchesTrue](./badges/branchesTrue.svg)
 
 </div>
 
