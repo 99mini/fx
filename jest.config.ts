@@ -5,7 +5,7 @@ const config: Config = {
   testEnvironment: "node",
   testMatch: ["__tests__/**/*.(test|spce).[jt]s", "**/?(*.)+(spec|test).[jt]s"],
   collectCoverage: true,
-  coverageReporters: ["text", "text-summary", "json-summary"],
+  coverageReporters: ["text", "text-summary", "json-summary", "json"],
 };
 
 export default config;
