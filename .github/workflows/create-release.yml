@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   create-release:
     if: "${{github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'release: v')}}"
