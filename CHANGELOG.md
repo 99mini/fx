@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.5 (2025-06-03)
+
+
+### Chores
+
+* fix pulbish script ([#19](https://github.com/99mini/fx/issues/19)) ([c48e05c](https://github.com/99mini/fx/commit/c48e05c4880be74c27d3903ea6089861f756bf71))
+
 ### [1.0.4](https://github.com/99mini/fx/compare/v1.0.3...v1.0.4) (2025-06-03)
 
 
