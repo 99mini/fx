@@ -60,7 +60,7 @@ jobs:
         id: base-coverage
         run: |
           git fetch origin ${{ steps.get-base-branch.outputs.BASE_BRANCH }}
-          git checkout origin/${{ steps.get-base-branch.outputs.BASE_BRANCH }} -- coverage/coverage-final.json
+          git checkout origin/${{ steps.get-base-branch.outputs.BASE_BRANCH }} -- coverage/coverage-summary.json
 
           COVERAGE=$(node .scripts/get-summary.js)
           echo "base coverage: $COVERAGE"
