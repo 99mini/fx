@@ -46,9 +46,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: 🧪 Run tests
-        run: pnpm run test
-
       - name: 📊 Generate test coverage
         run: pnpm run ci
 

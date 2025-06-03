@@ -1,53 +1,12 @@
-import fs from "fs";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
+
+import { getTotalCoverage, loadCoverageData, saveSvg } from "./_utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const COVERAGE_PATH = path.resolve(__dirname, "../coverage/coverage-final.json");
-const OUTPUT_PATH = path.resolve(__dirname, "../badges/coverage.svg");
-
-function loadCoverageData(filePath) {
-  if (!fs.existsSync(filePath)) {
-    console.error("❌ coverage-final.json 파일을 찾을 수 없습니다.");
-    process.exit(1);
-  }
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
-}
-
-function getTotalCoverage(data) {
-  let statements = { covered: 0, total: 0 };
-  let branches = { covered: 0, total: 0 };
-  let functions = { covered: 0, total: 0 };
-  let lines = { covered: 0, total: 0 };
-
-  for (const file of Object.values(data)) {
-    for (const [k, v] of Object.entries(file.s || {})) {
-      statements.covered += v > 0 ? 1 : 0;
-      statements.total++;
-    }
-    for (const [k, v] of Object.entries(file.b || {})) {
-      branches.covered += v.reduce((acc, b) => acc + (b > 0 ? 1 : 0), 0);
-      branches.total += v.length;
-    }
-    for (const [k, v] of Object.entries(file.f || {})) {
-      functions.covered += v > 0 ? 1 : 0;
-      functions.total++;
-    }
-    // lines는 별도로 없으면 statements와 동일하게 처리
-    lines = statements;
-  }
-
-  const toPercent = ({ covered, total }) => (total === 0 ? 100 : Math.round((covered / total) * 100));
-
-  return {
-    statements: toPercent(statements),
-    branches: toPercent(branches),
-    functions: toPercent(functions),
-    lines: toPercent(lines),
-  };
-}
+const COVERAGE_PATH = path.resolve(__dirname, "../coverage/coverage-summary.json");
 
 function getColor(percent) {
   if (percent >= 90) return "#4c1";
@@ -80,34 +39,16 @@ function generateSvg(label, value, color) {
 `.trim();
 }
 
-function saveSvg(svg, filePath) {
-  fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, svg, "utf8");
-  console.log(`✅ Coverage SVG badge saved to: ${filePath}`);
-}
-
 // 실행
 const coverage = loadCoverageData(COVERAGE_PATH);
 const summary = getTotalCoverage(coverage);
 
-let total = 0;
-
 for (const [key, value] of Object.entries(summary)) {
-  console.log(`\nCoverage ${key}: ${value}%`);
-  total += value;
+  console.log(`\nCoverage ${key}: ${value.pct}%`);
 
-  const percent = summary[key];
+  const percent = value.pct;
   const color = getColor(percent);
   const svg = generateSvg(key, percent, color);
   const outputPath = path.resolve(__dirname, `../badges/${key}.svg`);
   saveSvg(svg, outputPath);
 }
-
-const average = Math.round(total / Object.keys(summary).length);
-
-console.log(`\nTotal Coverage: ${average}%`);
-
-const color = getColor(average);
-const svg = generateSvg("coverage", average, color);
-const outputPath = path.resolve(__dirname, OUTPUT_PATH);
-saveSvg(svg, outputPath);
