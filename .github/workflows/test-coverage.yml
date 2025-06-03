@@ -10,7 +10,6 @@ on:
     paths:
       - "**/*.ts"
       - "**/*.spec.ts"
-      - "package.json"
       - "pnpm-lock.yaml"
 
   pull_request:
@@ -18,7 +17,6 @@ on:
     paths:
       - "**/*.ts"
       - "**/*.spec.ts"
-      - "package.json"
       - "pnpm-lock.yaml"
 
 jobs:

@@ -15,6 +15,13 @@
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
   "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist",
+    "package.json",
+    "README.MD",
+    "CHANGELOG.md",
+    "badges"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.esm.js",
@@ -33,7 +40,6 @@
     "build": "pnpm clean && pnpm build:types && pnpm build:rollup",
     "ci": "pnpm run test:coverage && pnpm run badge",
     "prepublish": "pnpm run build",
-    "publish": "npm publish --access public",
     "release": "standard-version",
     "release:minor": "standard-version --release-as minor",
     "release:patch": "standard-version --release-as patch",
