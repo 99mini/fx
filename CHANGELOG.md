@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.8 (2025-06-03)
+
+
+### Chores
+
+* build packages before publish ([#25](https://github.com/99mini/fx/issues/25)) ([d9f1d39](https://github.com/99mini/fx/commit/d9f1d39fa965effbd7c29fb3619dae816d85f85b))
+
 ### 1.0.7 (2025-06-03)
 
 
